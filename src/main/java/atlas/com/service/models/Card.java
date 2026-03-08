@@ -2,22 +2,26 @@ package atlas.com.service.models;
 
 import atlas.com.service.enums.CardLevelEnum;
 import atlas.com.service.enums.CardStatusEnum;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "card")
+@Table(name = "cards")
 public class Card {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Long userCPF;
 
     private String PAN;
     private String CVV;
     private String PIN;
-    private Date expirationDate;
+    private LocalDate expirationDate;
+    private String brand;
+
+    private String cardholderName;
 
     //dispositivo de origem da transação
     private String deviceId;
@@ -25,7 +29,15 @@ public class Card {
     //tentativas de senha inválida
     private int failedAttempts;
 
-    private Enum<CardStatusEnum> status;
-    private Enum<CardLevelEnum> level;
+    @Enumerated(EnumType.STRING)
+    private CardStatusEnum status;
 
+    @Enumerated(EnumType.STRING)
+    private CardLevelEnum level;
+
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    private boolean international;
 }
