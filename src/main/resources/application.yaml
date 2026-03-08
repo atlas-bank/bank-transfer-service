@@ -1,6 +1,16 @@
 spring:
   application:
     name: Atlas Transfer Service
+  datasource:
+    url: ${ATLAS_POSTGRESQL_URL}
+    username: ${ATLAS_POSTGRESQL_USERNAME}
+    password: ${ATLAS_POSTGRESQL_PASSWORD}
+    driver-class-name: org.postgresql.Driver
   jpa:
-    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
+    hibernate:
+      ddl-auto: update #Alterar para 'validate'
+    properties:
+      hibernate:
+        format_sql: true
