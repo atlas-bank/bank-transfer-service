@@ -4,4 +4,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CardService {
+    public void createCard(String userId, String pin) {
+
+    }
 }
