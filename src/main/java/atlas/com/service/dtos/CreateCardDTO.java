@@ -10,6 +10,7 @@ public record CreateCardDTO(
         String deviceId,
         String brand,
         CardStatusEnum status,
-        CardLevelEnum level
+        CardLevelEnum level,
+        boolean international
 ) {
 }

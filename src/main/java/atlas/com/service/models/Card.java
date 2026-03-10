@@ -5,7 +5,9 @@ import atlas.com.service.enums.CardStatusEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 
@@ -13,6 +15,7 @@ import java.time.YearMonth;
 @Table(name = "cards")
 @Getter
 @Setter
+@ToString
 public class Card {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +25,7 @@ public class Card {
     private String PAN;
     private String CVV;
     private String PIN;
-    private YearMonth expirationDate;
+    private LocalDate expirationDate;
 
     private String brand;
 
@@ -46,18 +49,19 @@ public class Card {
     private LocalDateTime updatedAt;
 
 
-    public Card(Long id,
-                String userCPF,
-                String brand,
-                String cardholderName,
-                String deviceId,
-                CardStatusEnum status,
-                CardLevelEnum level,
-                boolean international
+    public Card(
+            String pin,
+            String userCPF,
+            String brand,
+            String cardholderName,
+            String deviceId,
+            CardStatusEnum status,
+            CardLevelEnum level,
+            boolean international
     ) {
-        this.id = id;
+
         this.userCPF = userCPF;
-        this.expirationDate = YearMonth.now().plusMonths(30);
+        this.expirationDate = YearMonth.now().plusMonths(30).atEndOfMonth();
         this.brand = brand;
         this.cardholderName = cardholderName;
         this.deviceId = deviceId;
@@ -68,18 +72,22 @@ public class Card {
         LocalDateTime date = LocalDateTime.now();
         this.createdAt = date;
         this.updatedAt = date;
+
+        this.generatePAN();
+        this.generateCVV();
+        this.hashPIN(pin);
     }
 
-    public void generatePAN() {
-        this.PAN = "";
+    private void generatePAN() {
+        this.PAN = "PAN";
     }
 
-    public void generateCVV() {
-        this.CVV = "";
+    private void generateCVV() {
+        this.CVV = "CVV";
     }
 
-    public void hashPIN(String pin) {
-        this.PIN = "";
+    private void hashPIN(String pin) {
+        this.PIN = "PIN_HASH";
     }
 
 }
