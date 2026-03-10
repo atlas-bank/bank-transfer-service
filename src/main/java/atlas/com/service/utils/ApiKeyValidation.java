@@ -2,24 +2,38 @@ package atlas.com.service.utils;
 
 
 import atlas.com.service.exceptions.UnauthorizedException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerInterceptor;
 
 @Component
-public class ApiKeyValidation {
+public class ApiKeyValidation implements HandlerInterceptor {
 
-    private static final String API_KEY = System.getenv("API_KEY");
+    private static final String API_KEY_INTERNAL = System.getenv("API_KEY_INTERNAL");
 
     public void validateApiKey(String apiKey) throws UnauthorizedException {
-        if (API_KEY == null || API_KEY.isBlank()) {
+        if (API_KEY_INTERNAL == null || API_KEY_INTERNAL.isBlank()) {
             throw new UnauthorizedException("OS API-KEY is empty");
         }
         if (apiKey == null) {
             throw new UnauthorizedException("Header apikey is null");
         }
-        if (!API_KEY.equals(apiKey)) {
+        if (!API_KEY_INTERNAL.equals(apiKey)) {
             throw new UnauthorizedException("Invalid API-KEY");
         }
 
     }
 
+    @Override
+    public boolean preHandle(HttpServletRequest request,
+                             HttpServletResponse response,
+                             Object handler) throws UnauthorizedException {
+
+        String apiKey = request.getHeader("x-api-key");
+
+        validateApiKey(apiKey);
+
+        return true; // permite continuar para o controller
+    }
 }
