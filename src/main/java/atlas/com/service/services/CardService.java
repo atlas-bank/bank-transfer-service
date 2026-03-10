@@ -1,5 +1,6 @@
 package atlas.com.service.services;
 
+import atlas.com.service.dtos.CardTokenizationDTO;
 import atlas.com.service.dtos.CreateCardDTO;
 import atlas.com.service.models.Card;
 import atlas.com.service.repositories.CardRepository;
@@ -9,9 +10,11 @@ import org.springframework.stereotype.Service;
 public class CardService {
 
     private final CardRepository repository;
+    private final TokenizationService tokenizationService;
 
-    public CardService(CardRepository repository) {
+    public CardService(CardRepository repository, TokenizationService tokenizationService) {
         this.repository = repository;
+        this.tokenizationService = tokenizationService;
     }
 
     public String validateAndCreateCard(CreateCardDTO dto) {
@@ -20,8 +23,14 @@ public class CardService {
     }
 
     private void createCard(CreateCardDTO dto) {
+        String tokenizedCardID = tokenizationService.tokenizeCard(
+                new CardTokenizationDTO(
+                        dto.pin(),
+                        dto.userCPF()
+                )
+        );
         Card card = new Card(
-                dto.pin(),
+                tokenizedCardID,
                 dto.userCPF(),
                 dto.brand(),
                 dto.userFullName(),

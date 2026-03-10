@@ -22,9 +22,8 @@ public class Card {
     private Long id;
     private String userCPF;
 
-    private String PAN;
-    private String CVV;
-    private String PIN;
+    private String tokenizedCardID;
+
     private LocalDate expirationDate;
 
     private String brand;
@@ -50,7 +49,7 @@ public class Card {
 
 
     public Card(
-            String pin,
+            String tokenizedCardID,
             String userCPF,
             String brand,
             String cardholderName,
@@ -58,6 +57,7 @@ public class Card {
             CardStatusEnum status,
             CardLevelEnum level,
             boolean international
+
     ) {
 
         this.userCPF = userCPF;
@@ -72,22 +72,9 @@ public class Card {
         LocalDateTime date = LocalDateTime.now();
         this.createdAt = date;
         this.updatedAt = date;
+        this.tokenizedCardID = tokenizedCardID;
 
-        this.generatePAN();
-        this.generateCVV();
-        this.hashPIN(pin);
     }
 
-    private void generatePAN() {
-        this.PAN = "PAN";
-    }
-
-    private void generateCVV() {
-        this.CVV = "CVV";
-    }
-
-    private void hashPIN(String pin) {
-        this.PIN = "PIN_HASH";
-    }
 
 }
