@@ -48,14 +48,9 @@ public class Card {
 
     public Card(Long id,
                 String userCPF,
-                String PAN,
-                String CVV,
-                String PIN,
-                YearMonth expirationDate,
                 String brand,
                 String cardholderName,
                 String deviceId,
-                int failedAttempts,
                 CardStatusEnum status,
                 CardLevelEnum level,
                 boolean international
