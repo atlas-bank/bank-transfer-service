@@ -65,9 +65,21 @@ public class Card {
         this.status = status;
         this.level = level;
         this.international = international;
-
         LocalDateTime date = LocalDateTime.now();
         this.createdAt = date;
         this.updatedAt = date;
     }
+
+    public void generatePAN() {
+        this.PAN = "";
+    }
+
+    public void generateCVV() {
+        this.CVV = "";
+    }
+
+    public void hashPIN(String pin) {
+        this.PIN = "";
+    }
+
 }
