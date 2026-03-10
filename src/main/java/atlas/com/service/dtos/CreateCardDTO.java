@@ -1,4 +1,15 @@
 package atlas.com.service.dtos;
 
-public record CreateCardDTO(String userId, String pin) {
+import atlas.com.service.enums.CardLevelEnum;
+import atlas.com.service.enums.CardStatusEnum;
+
+public record CreateCardDTO(
+        String userCPF,
+        String pin,
+        String userFullName,
+        String deviceId,
+        String brand,
+        CardStatusEnum status,
+        CardLevelEnum level
+) {
 }
