@@ -1,6 +1,7 @@
 package atlas.com.service.controllers;
 
 import atlas.com.service.dtos.CreateCardDTO;
+import atlas.com.service.exceptions.BadRequestException;
 import atlas.com.service.services.CardService;
 import atlas.com.service.utils.ApiKeyValidation;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +19,14 @@ public class CardController {
 
     @PostMapping
     public String createCard(@RequestBody CreateCardDTO dto, @RequestHeader("x-api-key") String apiKey) {
+        if (dto == null) {
+            throw new BadRequestException("Request body is null");
+        }
+
         apiKeyValidation.validateApiKey(apiKey);
 
-        service.createCard(dto.userId(), dto.pin());
+
+        service.createCard(dto);
 
         return "Not Implemented";
     }

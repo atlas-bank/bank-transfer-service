@@ -1,10 +1,11 @@
 package atlas.com.service.services;
 
+import atlas.com.service.dtos.CreateCardDTO;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CardService {
-    public void createCard(String userId, String pin) {
+    public void createCard(CreateCardDTO dto) {
 
     }
 }

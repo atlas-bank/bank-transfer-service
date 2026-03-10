@@ -16,8 +16,14 @@ public class GlobalExceptionHandler {
         return response.of(null, ex.getMessage(), HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<ApiResponseRecord> badRequestException(BadRequestException ex) {
+        return response.of(null, ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponseRecord> exception(Exception ex) {
         return response.of(null, ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
 }
